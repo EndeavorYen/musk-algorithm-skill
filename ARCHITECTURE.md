@@ -6,7 +6,7 @@ Independent Grok skill. Same `SKILL.md` copies to Claude, Cursor, and Hermes. Co
 |---|---|---|---|
 | Job | First-principles evaluation of a requirement, design, process, or system | Evidence-backed hunt, list only | Evidence-backed hunt-fix review loop |
 | Sequence | Musk's five steps **in order** | One round of up to 10 challenges | Rounds until a round finds none |
-| Default output | Structured evaluation report | List in the conversation; no review log | Fixes (or blockers) plus a review log |
+| Default output | Structured evaluation report in the conversation; no evaluation file | List in the conversation; no review log | Fixes (or blockers) plus a review log |
 | Helper | None | None | `scripts/review-log.py` + `.just-ten-more/` |
 | Apply edits | Only if asked, and only after steps 1–2 say the thing should exist | None | Fix in the same round |
 
@@ -30,11 +30,11 @@ Installed skill root (`musk-algorithm/`): `SKILL.md`, `README.md`, `references/`
 
 ## What each file owns
 
-- **SKILL.md** — When to run (explicit invocation always; auto-load only when the description matches), the five-step contract, report shape, apply-vs-report rule, quote discipline. Entire repo is English. Runtime may still speak the user's language. Point at `references/sources.md` instead of retelling Isaacson.
+- **SKILL.md** — When to run (explicit invocation always; auto-load only when the description matches), the five-step contract, report shape, conversation-only report unless asked to save, apply-vs-report rule, quote discipline. Entire repo is English. Runtime may still speak the user's language. Point at `references/sources.md` instead of retelling Isaacson.
 - **references/sources.md** — Fair-use short quotes and attributions. Canonical written algorithm: Isaacson 2023 ~pp. 284–286. Spoken origin: Everyday Astronaut Starbase Tour, Aug 2021. Mantra / gone-backwards: Lex Fridman #438, Aug 2024. Flag unverified material (no fire-suppression-pad unowned-requirement story as Musk/Isaacson).
 - **README.md** — What it is, complementary-to-just-ten-more, when it triggers, quick start, install table, `GROK_HOME` / `HERMES_HOME`.
 - **scripts/install.ps1**, **scripts/install.sh** — Copy `SKILL.md`, optional `README.md`, and `references/` if present. One positional arg: `grok | claude | cursor | hermes | all` (default `all`). No `review-log.py`. Shape matches just-ten-more (neither ships that helper). just-ten-more-loop ships `scripts/review-log.py`.
-- **tests/check_skill.py** — Named PASS/FAIL checks: frontmatter, five-step bars, English-only repo files, installers, LF on `install.sh`, git mode `100755`, README paths, complementary just-ten-more vs just-ten-more-loop claims, `.gitignore` lists `.just-ten-more/`, tempdir install (never the real home).
+- **tests/check_skill.py** — Named PASS/FAIL checks: frontmatter, five-step bars, English-only repo files, installers, LF on `install.sh`, git mode `100755`, README paths, complementary just-ten-more vs just-ten-more-loop claims, musk report lives in the conversation with no default file, `.gitignore` lists `.just-ten-more/`, tempdir install (never the real home).
 - **tests/test_skill_contract.py** — `pytest` exec of `check_skill.py`; assert returncode 0.
 
 ## Data flow
@@ -48,8 +48,10 @@ trigger (musk algorithm, /musk-algorithm, description phrases)
     -> step 3 Simplify and optimize        (only after 1–2)
     -> step 4 Accelerate cycle time        (only after 1–3)
     -> step 5 Automate                     (last)
-    -> structured evaluation report
-    -> apply changes only if the user asked AND steps 1–2 keep the thing
+    -> structured evaluation report in the conversation
+    -> write the report to a file only if the user asked to save that evaluation
+       (path they named; do not invent a default report path)
+    -> apply subject edits only if the user asked AND steps 1-2 keep the thing
 ```
 
 Sequence is the algorithm. Skipping ahead multiplies waste (optimize a thing that should not exist; accelerate / automate something later deleted). One algorithm across Isaacson / Starbase / Lex — not three.

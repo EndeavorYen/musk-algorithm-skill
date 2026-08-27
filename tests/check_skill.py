@@ -152,6 +152,40 @@ def main() -> int:
     check("body states sequence/order", "in order" in body_l or "sequence is the algorithm" in body_l)
     check("default output is a report not a rewrite", report_not_rewrite)
     check("apply only if asked", apply_if_asked)
+    check(
+        "SKILL.md emits the report in the conversation",
+        "emit this report in the conversation" in body_l,
+    )
+    check(
+        "SKILL.md does not write the report unless asked to save",
+        "do not write it to a workspace file" in body_l
+        and "asked to save" in body_l,
+    )
+    check(
+        "SKILL.md says saving the report is not applying edits",
+        "saving the report" in body_l and "not applying edits" in body_l,
+    )
+    check(
+        "SKILL.md forbids inventing a default report path",
+        "do not invent a default report path" in body_l,
+    )
+    check(
+        "SKILL.md does not invent a path when save has none",
+        "asked to save but named no path" in body_l,
+    )
+    report_fence = re.search(
+        r"```\n# Musk algorithm evaluation\n(.*?)\n```",
+        body,
+        flags=re.S,
+    )
+    fence_text = report_fence.group(1).lower() if report_fence else ""
+    check("report template fence is present", report_fence is not None)
+    check(
+        "report template Decision does not mention saving a file",
+        bool(fence_text)
+        and "save" not in fence_text
+        and "workspace" not in fence_text,
+    )
 
     english_files = [
         SKILL_PATH,
@@ -201,6 +235,12 @@ def main() -> int:
     readme_default = markdown_row(readme, "| Default |")
     check("README Default row has four columns", len(readme_default) == 4)
     check(
+        "README musk-algorithm Default is conversation, no evaluation file",
+        len(readme_default) == 4
+        and "conversation" in readme_default[1].lower()
+        and "no evaluation file" in readme_default[1].lower(),
+    )
+    check(
         "README just-ten-more Default is no review log",
         len(readme_default) == 4
         and "no review log" in readme_default[2].lower()
@@ -232,6 +272,12 @@ def main() -> int:
         len(helper_cols) == 4 and "review-log.py" in helper_cols[3],
     )
     arch_default = markdown_row(arch, "| Default output |")
+    check(
+        "ARCHITECTURE musk-algorithm Default output is conversation, no evaluation file",
+        len(arch_default) == 4
+        and "conversation" in arch_default[1].lower()
+        and "no evaluation file" in arch_default[1].lower(),
+    )
     check(
         "ARCHITECTURE just-ten-more Default output is no review log",
         len(arch_default) == 4

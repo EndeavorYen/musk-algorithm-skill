@@ -13,8 +13,12 @@ description: >
 Speak in the user's language.
 
 Run this five-step algorithm in order. Sequence is the algorithm. Default
-output is a structured evaluation report, not a code rewrite
-(report-not-rewrite). Do not start a just-ten-more hunt or just-ten-more-loop.
+output is a structured evaluation report in the conversation, not a code rewrite
+(report-not-rewrite). Do not write the report to a workspace file
+unless the user asked to save that evaluation. Saving the report, if asked,
+is not applying edits. Do not invent a default report path.
+If they asked to save but named no path, do not invent one; emit in the conversation only.
+Do not start a just-ten-more hunt or just-ten-more-loop.
 Do not implement unless asked.
 
 ## When
@@ -47,8 +51,9 @@ to simplify, accelerate, or automate, refuse and resume at the first
 incomplete step.
 
 Enforce the named-person bar and the 10% add-back bar. Changes are
-apply-only-if-asked: apply changes only if the user asked AND steps 1–2
-say the thing should exist.
+apply-only-if-asked: apply changes to the subject only if the user asked
+AND steps 1–2 say the thing should exist. Saving the evaluation report is
+not an edit to the subject.
 
 Quotes live in `references/sources.md`. Do not invent lines. Do not
 retell the biography. Do not present a fire-suppression-pad
@@ -148,7 +153,10 @@ Reject these and continue:
 
 ## Report
 
-Emit this report. Fill every section. Do not skip a heading.
+Emit this report in the conversation. Fill every section. Do not skip a
+heading. Do not write it to a workspace file unless the user asked to save
+that evaluation. The report includes named owners and keep/change/drop
+decisions; leave it in the conversation unless they asked to save it.
 
 ```
 # Musk algorithm evaluation
@@ -176,6 +184,9 @@ If the surviving surface still names a deleted process, mark FAIL and
 return to step 2.
 
 ## Decision
-Keep, change, or drop the subject. Apply changes only if the user asked
-AND steps 1–2 say the thing should exist. Otherwise report only.
+Keep, change, or drop the subject.
 ```
+
+After the report: apply changes to the subject only if the user asked AND
+steps 1–2 say the thing should exist. Otherwise report only. Writing the
+report to a file, if they asked to save it, is not applying those edits.

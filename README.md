@@ -18,7 +18,7 @@ Clone, install, then say `musk algorithm` or `/musk-algorithm`.
 ./scripts/install.sh grok
 ```
 
-Use `claude`, `cursor`, `hermes`, or `all` instead of `grok`. You get a structured report, not an immediate rewrite.
+Use `claude`, `cursor`, `hermes`, or `all` instead of `grok`. You get a structured report in the conversation, not an immediate rewrite. The report is not written to a workspace file unless you asked to save that evaluation.
 
 ## The algorithm
 
@@ -30,7 +30,7 @@ Sequence **is** the algorithm. Full attributed excerpts: [`references/sources.md
 4. **Accelerate cycle time — only after 1–3.** Do not dig the grave faster. Musk spent Tesla-factory time speeding processes he later deleted.
 5. **Automate last.** Nevada and Fremont started by automating every step. Gone-backwards is automate → speed up → simplify → delete.
 
-Default output is a report: owners and keep/change/drop, a delete list with expected add-backs, simplify only survivors, then yes/no on accelerate and automate. The agent applies edits **only if you asked** and **only if steps 1–2 say the thing should exist**.
+Default output is a report in the conversation: owners and keep/change/drop, a delete list with expected add-backs, simplify only survivors, then yes/no on accelerate and automate. It is not an evaluation file unless you asked to save it, and then only at the path you named. The agent applies edits to the subject **only if you asked** and **only if steps 1–2 say the thing should exist**. Saving the report is not those edits.
 
 | If you skip ahead | What fails |
 | --- | --- |
@@ -59,7 +59,7 @@ Use `/just-ten-more-loop` for *fix or block, write `.just-ten-more/review-log.js
 | --- | --- | --- | --- |
 | Job | First-principles evaluation | Evidence-backed hunt, list only | Evidence-backed hunt-fix loop |
 | Sequence | Five steps **in order** | One round of up to 10 challenges | Rounds until a round finds none |
-| Default | Structured report | List in the conversation; no review log | Fixes or blockers, plus a log |
+| Default | Structured report in the conversation; no evaluation file | List in the conversation; no review log | Fixes or blockers, plus a log |
 | Edits | Only if asked, after 1–2 keep it | None | Fix in the same round |
 
 Do not merge them.
