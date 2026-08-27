@@ -64,6 +64,8 @@ Use `/just-ten-more-loop` for *fix or block, write `.just-ten-more/review-log.js
 
 Do not merge them.
 
+After a report, [musk-backlog](https://github.com/EndeavorYen/musk-backlog) turns surviving keep/change items and delete-work into work items, then stops. It does not implement. Forge is detected from git remote (GitHub, GitLab, or none). Do not merge musk-algorithm with musk-backlog.
+
 ## Install
 
 One argument: `grok` | `claude` | `cursor` | `hermes` | `all`. Default `all`. Unknown platform is rejected.

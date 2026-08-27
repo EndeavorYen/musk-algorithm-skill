@@ -252,6 +252,24 @@ def main() -> int:
         re.search(r"stop this skill\s+and use just-ten-more-loop", body_l)
         is not None,
     )
+    check("SKILL.md mentions musk-backlog", "musk-backlog" in body)
+    check(
+        "SKILL.md routes work-item/backlog asks to musk-backlog",
+        re.search(r"stop this skill\s+and use musk-backlog", body_l) is not None,
+    )
+    check(
+        "SKILL.md forbids starting musk-backlog",
+        "do not start musk-backlog" in body_l,
+    )
+    check(
+        "SKILL.md says musk-backlog does not implement or then stops",
+        "does not implement" in body_l and "then stops" in body_l,
+    )
+    check("README mentions musk-backlog", "musk-backlog" in readme)
+    check(
+        "README links musk-backlog repo",
+        "https://github.com/EndeavorYen/musk-backlog" in readme,
+    )
     readme_default = markdown_row(readme, "| Default |")
     check("README Default row has four columns", len(readme_default) == 4)
     check(

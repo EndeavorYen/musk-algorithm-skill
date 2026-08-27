@@ -1,6 +1,6 @@
 # musk-algorithm architecture
 
-Independent Grok skill. Same `SKILL.md` copies to Claude, Cursor, and Hermes. Complementary to [just-ten-more](https://github.com/EndeavorYen/just-ten-more): never merge them. `just-ten-more` lists challenges and writes no review log. `just-ten-more-loop` is the hunt-fix loop.
+Independent Grok skill. Same `SKILL.md` copies to Claude, Cursor, and Hermes. Complementary to [just-ten-more](https://github.com/EndeavorYen/just-ten-more): never merge them. `just-ten-more` lists challenges and writes no review log. `just-ten-more-loop` is the hunt-fix loop. `musk-backlog` is a separate skill: it turns a musk-algorithm report into work items, then stops.
 
 | | musk-algorithm | just-ten-more | just-ten-more-loop |
 |---|---|---|---|

@@ -22,6 +22,7 @@ Do not write a file to preserve memory, shorten context, or keep the table for a
 This skill has no next-round reader. Writing a file does not shorten this turn.
 A later turn gets the table only if they named a save path or pastes the report.
 Do not start a just-ten-more hunt or just-ten-more-loop.
+Do not start musk-backlog.
 Do not implement unless asked.
 
 ## When
@@ -45,6 +46,12 @@ blockers, writes `.just-ten-more/review-log.jsonl`, and hunts again.
 If they asked only to list challenges, stop this skill and use just-ten-more.
 If they asked to hunt bugs, fix them, and log challenges, stop this skill
 and use just-ten-more-loop.
+
+`musk-backlog` turns a musk-algorithm report into forge-agnostic work items,
+then stops. It does not implement and does not open a PR or MR.
+
+If they asked to turn the report into work items, issues, or a backlog,
+stop this skill and use musk-backlog.
 
 ## Stance
 
@@ -138,6 +145,9 @@ incomplete or the thing was deleted.
 Default is report-not-rewrite. If the user later asks to implement, do
 not re-run this skill as a rewrite. Hand surviving contracts to
 just-ten-more. Do not mix the two in one pass.
+If they asked to turn the report into work items or a backlog, stop this
+skill and use musk-backlog. Do not mix. Keep handing list-only hunts to
+just-ten-more. Do not re-run this skill as a rewrite.
 
 ## Rationalizations
 
