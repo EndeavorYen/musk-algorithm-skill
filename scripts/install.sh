@@ -12,27 +12,32 @@ esac
 
 repo_root="$(cd "$(dirname "$0")/.." && pwd)"
 skill_src="$repo_root/SKILL.md"
+backlog_src="$repo_root/musk-backlog/SKILL.md"
 readme_src="$repo_root/README.md"
 refs_src="$repo_root/references"
 if [[ ! -f "$skill_src" ]]; then
     echo "SKILL.md not found at $skill_src" >&2
     exit 1
 fi
+if [[ ! -f "$backlog_src" ]]; then
+    echo "musk-backlog/SKILL.md not found at $backlog_src" >&2
+    exit 1
+fi
 
-dest_for() {
+skills_root_for() {
   local name="$1"
   local home="${HOME}"
   case "$name" in
     grok)
       local root="${GROK_HOME:-$home/.grok}"
-      printf '%s\n' "$root/skills/musk-algorithm"
+      printf '%s\n' "$root/skills"
       ;;
     hermes)
       local root="${HERMES_HOME:-$home/.hermes}"
-      printf '%s\n' "$root/skills/musk-algorithm"
+      printf '%s\n' "$root/skills"
       ;;
-    claude) printf '%s\n' "$home/.claude/skills/musk-algorithm" ;;
-    cursor) printf '%s\n' "$home/.cursor/skills/musk-algorithm" ;;
+    claude) printf '%s\n' "$home/.claude/skills" ;;
+    cursor) printf '%s\n' "$home/.cursor/skills" ;;
     *)
       echo "Unknown platform $name" >&2
       return 1
@@ -42,18 +47,26 @@ dest_for() {
 
 install_to() {
   local name="$1"
-  local dest
-  dest="$(dest_for "$name")"
-  mkdir -p "$dest"
-  cp "$skill_src" "$dest/SKILL.md"
+  local skills dest_algo dest_backlog
+  skills="$(skills_root_for "$name")"
+  dest_algo="$skills/musk-algorithm"
+  dest_backlog="$skills/musk-backlog"
+  mkdir -p "$dest_algo"
+  cp "$skill_src" "$dest_algo/SKILL.md"
   if [[ -f "$readme_src" ]]; then
-    cp "$readme_src" "$dest/README.md"
+    cp "$readme_src" "$dest_algo/README.md"
   fi
   if [[ -d "$refs_src" ]]; then
-    rm -rf "$dest/references"
-    cp -R "$refs_src" "$dest/references"
+    rm -rf "$dest_algo/references"
+    cp -R "$refs_src" "$dest_algo/references"
   fi
-  echo "Installed $name -> $dest"
+  mkdir -p "$dest_backlog"
+  cp "$backlog_src" "$dest_backlog/SKILL.md"
+  if [[ -f "$readme_src" ]]; then
+    cp "$readme_src" "$dest_backlog/README.md"
+  fi
+  echo "Installed $name -> $dest_algo"
+  echo "Installed $name -> $dest_backlog"
 }
 
 if [[ "$platform" == "all" ]]; then

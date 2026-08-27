@@ -8,7 +8,7 @@ Works as a Grok skill. The same `SKILL.md` copies onto Claude, Cursor, and Herme
 
 ## Quick start
 
-Clone, install, then say `musk algorithm` or `/musk-algorithm`.
+Clone, install, then say `musk algorithm` or `/musk-algorithm`. After a report, say `/musk-backlog` to turn surviving contracts into work items, then stop.
 
 ```powershell
 .\scripts\install.ps1 grok
@@ -64,18 +64,18 @@ Use `/just-ten-more-loop` for *fix or block, write `.just-ten-more/review-log.js
 
 Do not merge them.
 
-After a report, [musk-backlog](https://github.com/EndeavorYen/musk-backlog) turns surviving keep/change items and delete-work into work items, then stops. It does not implement. Forge is detected from git remote (GitHub, GitLab, or none). Do not merge musk-algorithm with musk-backlog.
+After a report, `/musk-backlog` (`musk-backlog/SKILL.md` in this repo) turns surviving keep/change items and delete-work into work items, then stops. It does not implement. Forge is detected from git remote (GitHub, GitLab, or none). Do not merge the musk-algorithm pass with musk-backlog. One clone, one installer, two skill directories.
 
 ## Install
 
 One argument: `grok` | `claude` | `cursor` | `hermes` | `all`. Default `all`. Unknown platform is rejected.
 
-| Platform | Skill root |
+| Platform | Skill roots |
 | --- | --- |
-| grok | `~/.grok/skills/musk-algorithm/` |
-| claude | `~/.claude/skills/musk-algorithm/` |
-| cursor | `~/.cursor/skills/musk-algorithm/` |
-| hermes | `~/.hermes/skills/musk-algorithm/` |
+| grok | `~/.grok/skills/musk-algorithm/` and `~/.grok/skills/musk-backlog/` |
+| claude | `~/.claude/skills/musk-algorithm/` and `~/.claude/skills/musk-backlog/` |
+| cursor | `~/.cursor/skills/musk-algorithm/` and `~/.cursor/skills/musk-backlog/` |
+| hermes | `~/.hermes/skills/musk-algorithm/` and `~/.hermes/skills/musk-backlog/` |
 
 ```text
 # Windows
@@ -93,31 +93,33 @@ One argument: `grok` | `claude` | `cursor` | `hermes` | `all`. Default `all`. Un
 ./scripts/install.sh all
 ```
 
-If `GROK_HOME` is set, the grok target is `$GROK_HOME/skills/musk-algorithm/`.
-If `HERMES_HOME` is set, the hermes target is `$HERMES_HOME/skills/musk-algorithm/`.
+If `GROK_HOME` is set, the grok targets are `$GROK_HOME/skills/musk-algorithm/` and `$GROK_HOME/skills/musk-backlog/`.
+If `HERMES_HOME` is set, the hermes targets are `$HERMES_HOME/skills/musk-algorithm/` and `$HERMES_HOME/skills/musk-backlog/`.
 
 Claude and Cursor always use the home paths in the table.
 
-The destination contains `SKILL.md`, `README.md`, and `references/sources.md`. Restart the agent if it was already running.
+`musk-algorithm` gets `SKILL.md`, `README.md`, and `references/sources.md`. `musk-backlog` gets `SKILL.md` and `README.md`. Restart the agent if it was already running.
 
 Confirm:
 
 ```powershell
 Test-Path "$env:USERPROFILE\.grok\skills\musk-algorithm\SKILL.md"
+Test-Path "$env:USERPROFILE\.grok\skills\musk-backlog\SKILL.md"
 ```
 
 ```bash
-test -f ~/.grok/skills/musk-algorithm/SKILL.md && echo installed
+test -f ~/.grok/skills/musk-algorithm/SKILL.md && test -f ~/.grok/skills/musk-backlog/SKILL.md && echo installed
 ```
 
-Uninstall: delete the skill directory. Nothing else is registered.
+Uninstall: delete both skill directories. Nothing else is registered.
 
 ```powershell
 Remove-Item -Recurse -Force "$env:USERPROFILE\.grok\skills\musk-algorithm"
+Remove-Item -Recurse -Force "$env:USERPROFILE\.grok\skills\musk-backlog"
 ```
 
 ```bash
-rm -rf ~/.grok/skills/musk-algorithm
+rm -rf ~/.grok/skills/musk-algorithm ~/.grok/skills/musk-backlog
 ```
 
 Repeat for claude, cursor, and hermes if you installed `all`. If you used `GROK_HOME` or `HERMES_HOME`, delete those paths instead.
@@ -137,6 +139,7 @@ Typical asks:
 - Evaluate this design / process / requirement with the Musk algorithm.
 - Question every requirement on this spec; named owners only.
 - Run `/musk-algorithm` on the proposed pipeline before we automate it.
+- After that report: `/musk-backlog` (explicit; does not auto-run).
 
 ## Sources
 
@@ -151,13 +154,14 @@ Do not treat a fire-suppression-pad “unowned requirement” story as Musk or I
 ## Layout
 
 ```
-SKILL.md                     Agent prompt
+SKILL.md                     musk-algorithm agent prompt
+musk-backlog/SKILL.md        musk-backlog agent prompt
 README.md                    This file
 ARCHITECTURE.md              Maintainer layout and data flow
 references/sources.md        Quote home
-scripts/install.ps1          Windows installer
+scripts/install.ps1          Windows installer (both skills)
 scripts/install.sh           Unix installer (git 100755, LF)
 tests/                       Structural + install acceptance
 ```
 
-Installed skill root: `SKILL.md`, `README.md`, `references/`. There is no `review-log.py`.
+Installed `musk-algorithm/` root: `SKILL.md`, `README.md`, `references/`. Installed `musk-backlog/` root: `SKILL.md`, `README.md`. There is no `review-log.py`.

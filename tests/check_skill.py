@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL_PATH = ROOT / "SKILL.md"
+BACKLOG_PATH = ROOT / "musk-backlog" / "SKILL.md"
 README_PATH = ROOT / "README.md"
 SOURCES_PATH = ROOT / "references" / "sources.md"
 
@@ -209,6 +210,7 @@ def main() -> int:
 
     english_files = [
         SKILL_PATH,
+        BACKLOG_PATH,
         README_PATH,
         SOURCES_PATH,
         ROOT / "ARCHITECTURE.md",
@@ -266,9 +268,48 @@ def main() -> int:
         "does not implement" in body_l and "then stops" in body_l,
     )
     check("README mentions musk-backlog", "musk-backlog" in readme)
+    check("README names musk-backlog/SKILL.md", "musk-backlog/SKILL.md" in readme)
     check(
-        "README links musk-backlog repo",
-        "https://github.com/EndeavorYen/musk-backlog" in readme,
+        "README does not link a separate musk-backlog GitHub repo",
+        "https://github.com/EndeavorYen/musk-backlog" not in readme,
+    )
+    check("README install path musk-backlog", "~/.grok/skills/musk-backlog/" in readme)
+
+    backlog = read_text(BACKLOG_PATH) or ""
+    bfm, bbody = split_frontmatter(backlog)
+    bbody_l = bbody.lower()
+    bfm_l = bfm.lower()
+    check("musk-backlog/SKILL.md exists", BACKLOG_PATH.is_file())
+    check(
+        "musk-backlog frontmatter name musk-backlog",
+        bool(re.search(r"(?m)^name:\s*musk-backlog\s*$", bfm)),
+    )
+    check("musk-backlog description contains /musk-backlog", "/musk-backlog" in bfm)
+    check("musk-backlog description says explicit invocation always", "explicit invocation always" in bfm_l)
+    check("musk-backlog description says do not use to implement", "do not use to implement" in bfm_l)
+    check("musk-backlog mapping keep", "keep" in bbody_l)
+    check("musk-backlog mapping change", "change" in bbody_l)
+    check(
+        "musk-backlog drop is no work item",
+        "drop is no work item" in bbody_l or ("drop" in bbody_l and "no work item" in bbody_l),
+    )
+    check("musk-backlog mapping delete-work", "delete-work" in bbody_l)
+    check("musk-backlog forge git remote", "git remote" in bbody_l)
+    check("musk-backlog forge GitHub", "github" in bbody_l)
+    check("musk-backlog forge GitLab", "gitlab" in bbody_l)
+    check(
+        "musk-backlog conversation table is success",
+        "conversation table is success" in bbody_l,
+    )
+    check("musk-backlog then stop", "then stop" in bbody_l)
+    check(
+        "musk-backlog does not open a pull request or merge request",
+        "does not open a pull request" in bbody_l and "merge request" in bbody_l,
+    )
+    check("musk-backlog does not start musk-algorithm", "do not start musk-algorithm" in bbody_l)
+    check(
+        "musk-backlog lives in this repo not a second GitHub repository",
+        "not a second github repository" in bbody_l or "musk-backlog/skill.md" in bbody_l,
     )
     readme_default = markdown_row(readme, "| Default |")
     check("README Default row has four columns", len(readme_default) == 4)
@@ -298,6 +339,7 @@ def main() -> int:
         len(readme_edits) == 4 and "fix in the same round" in readme_edits[3].lower(),
     )
     arch = read_text(ROOT / "ARCHITECTURE.md") or ""
+    check("ARCHITECTURE names musk-backlog/SKILL.md", "musk-backlog/SKILL.md" in arch)
     check("ARCHITECTURE mentions just-ten-more-loop", "just-ten-more-loop" in arch)
     helper_cols = markdown_row(arch, "| Helper |")
     check("ARCHITECTURE helper row has four columns", len(helper_cols) == 4)
@@ -384,6 +426,15 @@ def main() -> int:
             "copied README.md matches source",
             _copied_equal(installed / "README.md", README_PATH) and bool(src_readme),
         )
+        installed_backlog = dest / ".grok" / "skills" / "musk-backlog"
+        check(
+            "install grok copies musk-backlog SKILL.md",
+            (installed_backlog / "SKILL.md").is_file(),
+        )
+        check(
+            "copied musk-backlog SKILL.md matches source",
+            _copied_equal(installed_backlog / "SKILL.md", BACKLOG_PATH),
+        )
         if SOURCES_PATH.is_file():
             copied_sources = installed / "references" / "sources.md"
             check("install grok copies references/sources.md", copied_sources.is_file())
@@ -406,6 +457,14 @@ def main() -> int:
             "install all copies hermes SKILL.md",
             (dest / ".hermes" / "skills" / "musk-algorithm" / "SKILL.md").is_file(),
         )
+        check(
+            "install all copies grok musk-backlog SKILL.md",
+            (dest / ".grok" / "skills" / "musk-backlog" / "SKILL.md").is_file(),
+        )
+        check(
+            "install all copies claude musk-backlog SKILL.md",
+            (dest / ".claude" / "skills" / "musk-backlog" / "SKILL.md").is_file(),
+        )
 
         hhome = dest / "custom-hermes"
         env_hermes = {**env, "HERMES_HOME": str(hhome)}
@@ -420,9 +479,14 @@ def main() -> int:
         env_home = {**env, "GROK_HOME": str(ghome)}
         proc_home = _run_install("grok", env_home)
         grok_installed = ghome / "skills" / "musk-algorithm"
+        grok_backlog = ghome / "skills" / "musk-backlog"
         check(
             "GROK_HOME dest copies SKILL.md",
             proc_home.returncode == 0 and (grok_installed / "SKILL.md").is_file(),
+        )
+        check(
+            "GROK_HOME dest copies musk-backlog SKILL.md",
+            (grok_backlog / "SKILL.md").is_file(),
         )
         check(
             "GROK_HOME dest copies README.md",
