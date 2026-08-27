@@ -2,11 +2,12 @@
 name: musk-algorithm
 description: >
   Evaluate a requirement, design, process, or system with Musk's
-  first principles algorithm: question every requirement, delete before optimize,
-  then simplify, accelerate, and automate last. Use when the user says
+  first principles algorithm. Use when the user says
   musk algorithm, musk-algorithm, five-step algorithm, first principles algorithm,
-  make requirements less dumb, delete before optimize, or runs /musk-algorithm.
-  Explicit invocation always runs, on whatever subject they named.
+  make requirements less dumb, delete before optimize, question every requirement,
+  or runs /musk-algorithm. Explicit invocation always runs, on whatever subject
+  they named. Use when a surviving operator surface still names a process
+  that was just deleted.
 ---
 
 Speak in the user's language.
@@ -77,6 +78,19 @@ Artifact:
 - Expected add-backs (at least 10% of the delete list, or delete more)
 - Warning that some deletions will be put back
 
+Deleting a process from the live path is not the same as deleting the
+module. Leftover code in the tree is not a remaining requirement. Do
+not optimize leftover modules as if they still gate the operator.
+
+Inspect the surviving operator-facing surface (the button, the card,
+the report). If it still names, requires, or looks finished because of
+a deleted process, the delete is incomplete. Chrome is not a
+requirement. Do not keep running a process because the surface still
+lists it.
+
+A merge or green CI is not proof the deleted process is gone from the
+live surface.
+
 If the whole subject is deleted, steps 3–5 are N/A. Accelerate: no.
 Automate: no.
 
@@ -105,6 +119,12 @@ simplify → delete (Nevada / Fremont). Automate last.
 Artifact — Automate: **yes** or **no**. Never yes if steps 1–4 are
 incomplete or the thing was deleted.
 
+## After the report
+
+Default is report-not-rewrite. If the user later asks to implement, do
+not re-run this skill as a rewrite. Hand surviving contracts to
+just-ten-more. Do not mix the two in one pass.
+
 ## Rationalizations
 
 Reject these and continue:
@@ -115,6 +135,10 @@ Reject these and continue:
 - "We never put anything back, so we deleted correctly" — you did not delete enough.
 - "Optimize / speed / automate now; delete later" — gone-backwards; forbidden.
 - "It is already automated, so keep it" — sunk cost is not a requirement.
+- "The module is still in the tree, so keep the process" — leftover code is not a live-path requirement.
+- "The card still lists it, so we should still run it" — chrome is not a requirement; delete the chrome with the process.
+- "Merge means the delete landed" — go-live is the operator surface, not the merge.
+- "Musk report done, rewrite now" — report-not-rewrite. Implement only if asked, as a separate hunt-fix.
 
 ## Report
 
@@ -128,6 +152,7 @@ Emit this report. Fill every section. Do not skip a heading.
 
 ## 2. Deletions
 (delete list + expected add-backs + warning)
+(live-path vs leftover tree; surviving surface check)
 
 ## 3. Simplify and optimize
 (survivors of 1–2 only)
@@ -141,6 +166,8 @@ Emit this report. Fill every section. Do not skip a heading.
 ## Order-check
 Steps ran 1→5. No skip. No reverse. If anything was optimized, sped, or
 automated that steps 1–2 would drop, mark FAIL and return to that step.
+If the surviving surface still names a deleted process, mark FAIL and
+return to step 2.
 
 ## Decision
 Keep, change, or drop the subject. Apply changes only if the user asked
