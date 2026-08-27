@@ -173,6 +173,26 @@ def main() -> int:
         "SKILL.md does not invent a path when save has none",
         "asked to save but named no path" in body_l,
     )
+    check(
+        "SKILL.md does not write a file to preserve memory",
+        "do not write a file to preserve memory" in body_l,
+    )
+    check(
+        "SKILL.md has no next-round reader",
+        "no next-round reader" in body_l,
+    )
+    check(
+        "SKILL.md says a file does not shorten this turn",
+        "does not shorten this turn" in body_l,
+    )
+    check(
+        "SKILL.md later turn needs named path or paste",
+        "named a save path" in body_l and "pastes the report" in body_l,
+    )
+    check(
+        "SKILL.md rejects write-file-for-memory rationalization",
+        "the agent will forget, so write a file" in body_l,
+    )
     report_fence = re.search(
         r"```\n# Musk algorithm evaluation\n(.*?)\n```",
         body,

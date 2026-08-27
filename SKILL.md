@@ -18,6 +18,9 @@ output is a structured evaluation report in the conversation, not a code rewrite
 unless the user asked to save that evaluation. Saving the report, if asked,
 is not applying edits. Do not invent a default report path.
 If they asked to save but named no path, do not invent one; emit in the conversation only.
+Do not write a file to preserve memory, shorten context, or keep the table for a later turn.
+This skill has no next-round reader. Writing a file does not shorten this turn.
+A later turn gets the table only if they named a save path or pastes the report.
 Do not start a just-ten-more hunt or just-ten-more-loop.
 Do not implement unless asked.
 
@@ -150,13 +153,15 @@ Reject these and continue:
 - "The card still lists it, so we should still run it" — chrome is not a requirement; delete the chrome with the process.
 - "Merge means the delete landed" — go-live is the operator surface, not the merge.
 - "Musk report done, rewrite now" — report-not-rewrite. Implement only if asked, as a separate hunt-fix.
+- "Context is long / the agent will forget, so write a file" — no next-round reader; a file does not shorten this turn; they name a path or paste later.
 
 ## Report
 
 Emit this report in the conversation. Fill every section. Do not skip a
 heading. Do not write it to a workspace file unless the user asked to save
 that evaluation. The report includes named owners and keep/change/drop
-decisions; leave it in the conversation unless they asked to save it.
+decisions; leave it in the conversation unless they asked to save it and
+named a path.
 
 ```
 # Musk algorithm evaluation

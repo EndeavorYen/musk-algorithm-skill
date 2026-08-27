@@ -30,7 +30,7 @@ Installed skill root (`musk-algorithm/`): `SKILL.md`, `README.md`, `references/`
 
 ## What each file owns
 
-- **SKILL.md** — When to run (explicit invocation always; auto-load only when the description matches), the five-step contract, report shape, conversation-only report unless asked to save, apply-vs-report rule, quote discipline. Entire repo is English. Runtime may still speak the user's language. Point at `references/sources.md` instead of retelling Isaacson.
+- **SKILL.md** — When to run (explicit invocation always; auto-load only when the description matches), the five-step contract, report shape, conversation-only report unless asked to save at a named path, no next-round reader, apply-vs-report rule, quote discipline. Entire repo is English. Runtime may still speak the user's language. Point at `references/sources.md` instead of retelling Isaacson.
 - **references/sources.md** — Fair-use short quotes and attributions. Canonical written algorithm: Isaacson 2023 ~pp. 284–286. Spoken origin: Everyday Astronaut Starbase Tour, Aug 2021. Mantra / gone-backwards: Lex Fridman #438, Aug 2024. Flag unverified material (no fire-suppression-pad unowned-requirement story as Musk/Isaacson).
 - **README.md** — What it is, complementary-to-just-ten-more, when it triggers, quick start, install table, `GROK_HOME` / `HERMES_HOME`.
 - **scripts/install.ps1**, **scripts/install.sh** — Copy `SKILL.md`, optional `README.md`, and `references/` if present. One positional arg: `grok | claude | cursor | hermes | all` (default `all`). No `review-log.py`. Shape matches just-ten-more (neither ships that helper). just-ten-more-loop ships `scripts/review-log.py`.
@@ -51,6 +51,7 @@ trigger (musk algorithm, /musk-algorithm, description phrases)
     -> structured evaluation report in the conversation
     -> write the report to a file only if the user asked to save that evaluation
        (path they named; do not invent a default report path)
+    -> do not write a file to preserve memory or shorten context; no next-round reader
     -> apply subject edits only if the user asked AND steps 1-2 keep the thing
 ```
 

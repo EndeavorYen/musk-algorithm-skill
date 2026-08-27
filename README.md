@@ -18,7 +18,7 @@ Clone, install, then say `musk algorithm` or `/musk-algorithm`.
 ./scripts/install.sh grok
 ```
 
-Use `claude`, `cursor`, `hermes`, or `all` instead of `grok`. You get a structured report in the conversation, not an immediate rewrite. The report is not written to a workspace file unless you asked to save that evaluation.
+Use `claude`, `cursor`, `hermes`, or `all` instead of `grok`. You get a structured report in the conversation, not an immediate rewrite. The report is not written to a workspace file unless you asked to save that evaluation and named a path. A later turn needs the table only if you named that path or paste the report.
 
 ## The algorithm
 
