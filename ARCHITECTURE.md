@@ -1,14 +1,14 @@
 # musk-algorithm architecture
 
-Independent Grok skill. Same `SKILL.md` copies to Claude, Cursor, and Hermes. Complementary to [just-ten-more](https://github.com/EndeavorYen/just-ten-more): never merge them.
+Independent Grok skill. Same `SKILL.md` copies to Claude, Cursor, and Hermes. Complementary to [just-ten-more](https://github.com/EndeavorYen/just-ten-more): never merge them. `just-ten-more` lists challenges and writes no review log. `just-ten-more-loop` is the hunt-fix loop.
 
-| | musk-algorithm | just-ten-more |
-|---|---|---|
-| Job | First-principles evaluation of a requirement, design, process, or system | Evidence-backed hunt-fix review loop |
-| Sequence | Musk's five steps **in order** | Rounds of up to 10 challenges until a round finds none |
-| Default output | Structured evaluation report | Fixes (or blockers) plus a review log |
-| Helper | None | `scripts/review-log.py` + `.just-ten-more/` |
-| Apply edits | Only if asked, and only after steps 1–2 say the thing should exist | Fix in the same round |
+| | musk-algorithm | just-ten-more | just-ten-more-loop |
+|---|---|---|---|
+| Job | First-principles evaluation of a requirement, design, process, or system | Evidence-backed hunt, list only | Evidence-backed hunt-fix review loop |
+| Sequence | Musk's five steps **in order** | One round of up to 10 challenges | Rounds until a round finds none |
+| Default output | Structured evaluation report | List in the conversation; no review log | Fixes (or blockers) plus a review log |
+| Helper | None | None | `scripts/review-log.py` + `.just-ten-more/` |
+| Apply edits | Only if asked, and only after steps 1–2 say the thing should exist | None | Fix in the same round |
 
 ## File tree
 
@@ -22,7 +22,7 @@ scripts/install.ps1         Windows installer
 scripts/install.sh          Unix installer (git 100755, LF-only)
 tests/check_skill.py        Structural + install acceptance
 tests/test_skill_contract.py  Thin pytest wrapper around check_skill.py
-.gitignore                  __pycache__/ and .pytest_cache/
+.gitignore                  __pycache__/, .pytest_cache/, .grok/, .just-ten-more/
 .gitattributes              scripts/install.sh text eol=lf
 ```
 
@@ -33,8 +33,8 @@ Installed skill root (`musk-algorithm/`): `SKILL.md`, `README.md`, `references/`
 - **SKILL.md** — When to run (explicit invocation always; auto-load only when the description matches), the five-step contract, report shape, apply-vs-report rule, quote discipline. Entire repo is English. Runtime may still speak the user's language. Point at `references/sources.md` instead of retelling Isaacson.
 - **references/sources.md** — Fair-use short quotes and attributions. Canonical written algorithm: Isaacson 2023 ~pp. 284–286. Spoken origin: Everyday Astronaut Starbase Tour, Aug 2021. Mantra / gone-backwards: Lex Fridman #438, Aug 2024. Flag unverified material (no fire-suppression-pad unowned-requirement story as Musk/Isaacson).
 - **README.md** — What it is, complementary-to-just-ten-more, when it triggers, quick start, install table, `GROK_HOME` / `HERMES_HOME`.
-- **scripts/install.ps1**, **scripts/install.sh** — Copy `SKILL.md`, optional `README.md`, and `references/` if present. One positional arg: `grok | claude | cursor | hermes | all` (default `all`). No `review-log.py`. Shape matches just-ten-more minus that helper.
-- **tests/check_skill.py** — Named PASS/FAIL checks: frontmatter, five-step bars, English-only repo files, installers, LF on `install.sh`, git mode `100755`, README paths, tempdir install (never the real home).
+- **scripts/install.ps1**, **scripts/install.sh** — Copy `SKILL.md`, optional `README.md`, and `references/` if present. One positional arg: `grok | claude | cursor | hermes | all` (default `all`). No `review-log.py`. Shape matches just-ten-more (neither ships that helper). just-ten-more-loop ships `scripts/review-log.py`.
+- **tests/check_skill.py** — Named PASS/FAIL checks: frontmatter, five-step bars, English-only repo files, installers, LF on `install.sh`, git mode `100755`, README paths, complementary just-ten-more vs just-ten-more-loop claims, `.gitignore` lists `.just-ten-more/`, tempdir install (never the real home).
 - **tests/test_skill_contract.py** — `pytest` exec of `check_skill.py`; assert returncode 0.
 
 ## Data flow

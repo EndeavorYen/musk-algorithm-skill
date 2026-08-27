@@ -45,6 +45,13 @@ def split_frontmatter(text: str) -> tuple[str, str]:
     return rest[: match.start()], rest[match.end() :]
 
 
+def markdown_row(text: str, start: str) -> list[str]:
+    line = next((ln for ln in text.splitlines() if ln.startswith(start)), "")
+    if not line.strip():
+        return []
+    return [part.strip() for part in line.strip().strip("|").split("|")]
+
+
 def first_occurrences_in_order(text: str, needles: tuple[str, ...]) -> bool:
     lower = text.lower()
     positions: list[int] = []
@@ -161,6 +168,93 @@ def main() -> int:
         check(f"{path.relative_to(ROOT).as_posix()} is English", not CJK.search(text))
     check("SKILL.md body is English", not CJK.search(body))
     check("README mentions just-ten-more", "just-ten-more" in readme)
+    check("README mentions just-ten-more-loop", "just-ten-more-loop" in readme)
+    check("SKILL.md mentions just-ten-more-loop", "just-ten-more-loop" in body)
+    check("README says just-ten-more has no review log", "no review log" in readme.lower())
+    check(
+        "README says a list-only round is not the loop's log",
+        "not the loop's log" in readme.lower(),
+    )
+    check(
+        "SKILL.md says just-ten-more does not write a review log",
+        "does not write a review log" in body_l,
+    )
+    check("SKILL.md says just-ten-more does not fix", "it does not fix" in body_l)
+    check(
+        "SKILL.md forbids starting just-ten-more-loop",
+        "do not start a just-ten-more hunt or just-ten-more-loop" in body_l,
+    )
+    check(
+        "SKILL.md does not equate the hunt-fix loop with just-ten-more",
+        re.search(r"that loop is just-ten-more(?!-loop)", body_l) is None,
+    )
+    check(
+        "SKILL.md routes list-only asks to just-ten-more",
+        re.search(r"stop this skill\s+and use just-ten-more(?!-loop)", body_l)
+        is not None,
+    )
+    check(
+        "SKILL.md routes hunt-fix-log asks to just-ten-more-loop",
+        re.search(r"stop this skill\s+and use just-ten-more-loop", body_l)
+        is not None,
+    )
+    readme_default = markdown_row(readme, "| Default |")
+    check("README Default row has four columns", len(readme_default) == 4)
+    check(
+        "README just-ten-more Default is no review log",
+        len(readme_default) == 4
+        and "no review log" in readme_default[2].lower()
+        and "plus a log" not in readme_default[2].lower(),
+    )
+    check(
+        "README just-ten-more-loop Default includes a log",
+        len(readme_default) == 4 and "plus a log" in readme_default[3].lower(),
+    )
+    readme_edits = markdown_row(readme, "| Edits |")
+    check(
+        "README just-ten-more Edits is None",
+        len(readme_edits) == 4 and readme_edits[2] == "None",
+    )
+    check(
+        "README just-ten-more-loop Edits is fix in the same round",
+        len(readme_edits) == 4 and "fix in the same round" in readme_edits[3].lower(),
+    )
+    arch = read_text(ROOT / "ARCHITECTURE.md") or ""
+    check("ARCHITECTURE mentions just-ten-more-loop", "just-ten-more-loop" in arch)
+    helper_cols = markdown_row(arch, "| Helper |")
+    check("ARCHITECTURE helper row has four columns", len(helper_cols) == 4)
+    check(
+        "ARCHITECTURE just-ten-more helper is None",
+        len(helper_cols) == 4 and helper_cols[2] == "None",
+    )
+    check(
+        "ARCHITECTURE loop helper is review-log.py",
+        len(helper_cols) == 4 and "review-log.py" in helper_cols[3],
+    )
+    arch_default = markdown_row(arch, "| Default output |")
+    check(
+        "ARCHITECTURE just-ten-more Default output is no review log",
+        len(arch_default) == 4
+        and "no review log" in arch_default[2].lower()
+        and "review log" not in arch_default[2].lower().replace("no review log", ""),
+    )
+    check(
+        "ARCHITECTURE just-ten-more-loop Default output includes a review log",
+        len(arch_default) == 4 and "review log" in arch_default[3].lower(),
+    )
+    gitignore = read_text(ROOT / ".gitignore") or ""
+    check(".gitignore lists .just-ten-more/", ".just-ten-more/" in gitignore)
+    ignore_proc = subprocess.run(
+        ["git", "check-ignore", "-q", "--", ".just-ten-more/review-log.jsonl"],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    check(
+        "git ignores .just-ten-more/review-log.jsonl",
+        ignore_proc.returncode == 0,
+    )
     check("scripts/install.ps1 exists", (ROOT / "scripts" / "install.ps1").is_file())
     check("scripts/install.sh exists", (ROOT / "scripts" / "install.sh").is_file())
     check("install.sh has no CR", b"\r" not in (ROOT / "scripts" / "install.sh").read_bytes())

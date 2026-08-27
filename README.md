@@ -51,14 +51,16 @@ One algorithm across those three tellings — not three algorithms. Quotes and "
 
 Use this skill for *should this exist, who owns it, and in what order do we touch it?*
 
-Use **[just-ten-more](https://github.com/EndeavorYen/just-ten-more)** for *what is still wrong, with evidence — fix or block, then ten more.*
+Use **[just-ten-more](https://github.com/EndeavorYen/just-ten-more)** `/just-ten-more` for *what is still wrong, with evidence — list up to 10 challenges, no edits, no review log.* A list-only round lives in the conversation. It is not the loop's log.
 
-| | musk-algorithm | just-ten-more |
-| --- | --- | --- |
-| Job | First-principles evaluation | Evidence-backed hunt-fix loop |
-| Sequence | Five steps **in order** | Rounds of up to 10 challenges |
-| Default | Structured report | Fixes or blockers, plus a log |
-| Edits | Only if asked, after 1–2 keep it | Fix in the same round |
+Use `/just-ten-more-loop` for *fix or block, write `.just-ten-more/review-log.jsonl` in the repository under review, then hunt again until a round finds none.* The loop's next round reads that log, not a prior list-only chat.
+
+| | musk-algorithm | just-ten-more | just-ten-more-loop |
+| --- | --- | --- | --- |
+| Job | First-principles evaluation | Evidence-backed hunt, list only | Evidence-backed hunt-fix loop |
+| Sequence | Five steps **in order** | One round of up to 10 challenges | Rounds until a round finds none |
+| Default | Structured report | List in the conversation; no review log | Fixes or blockers, plus a log |
+| Edits | Only if asked, after 1–2 keep it | None | Fix in the same round |
 
 Do not merge them.
 

@@ -14,8 +14,8 @@ Speak in the user's language.
 
 Run this five-step algorithm in order. Sequence is the algorithm. Default
 output is a structured evaluation report, not a code rewrite
-(report-not-rewrite). Do not start a just-ten-more hunt. Do not implement
-unless asked.
+(report-not-rewrite). Do not start a just-ten-more hunt or just-ten-more-loop.
+Do not implement unless asked.
 
 ## When
 
@@ -29,9 +29,15 @@ that may not need to exist, or when they ask to question requirements or
 delete parts of a design.
 
 Do not auto-load for ordinary implementation, a bugfix, or an evidence-backed
-hunt-fix review loop. That loop is just-ten-more. Complementary; never merge.
+hunt. Complementary; never merge.
+
+`just-ten-more` lists up to 10 evidence-backed challenges. It does not fix
+and does not write a review log. `just-ten-more-loop` fixes or records
+blockers, writes `.just-ten-more/review-log.jsonl`, and hunts again.
+
+If they asked only to list challenges, stop this skill and use just-ten-more.
 If they asked to hunt bugs, fix them, and log challenges, stop this skill
-and use that one.
+and use just-ten-more-loop.
 
 ## Stance
 
