@@ -146,6 +146,19 @@ def main() -> int:
     check("body has named-person rule", named_person)
     check("body has Delete any part or process", "Delete any part or process" in body)
     check("body has 10% add-back bar", add_back)
+    check("SKILL.md names borderline cuts", "borderline cut" in body_l)
+    check(
+        "SKILL.md does not use a same-pass 10% delete-list quota",
+        "at least 10% of the delete list" not in body_l,
+    )
+    skill_flat = re.sub(r"\s+", " ", body_l)
+    check(
+        "SKILL.md says the 10% bar is later or forced by the live path",
+        bool(
+            re.search(r"10%.{0,160}(?:later|forced).{0,160}live path", skill_flat)
+            or re.search(r"10%.{0,160}live path.{0,160}(?:later|forced)", skill_flat)
+        ),
+    )
     check("body has Simplify and optimize", "Simplify and optimize" in body)
     check("body has Accelerate cycle time", "Accelerate cycle time" in body)
     check("body has Automate last", "Automate last" in body or "automate last" in body_l)
@@ -206,6 +219,14 @@ def main() -> int:
         bool(fence_text)
         and "save" not in fence_text
         and "workspace" not in fence_text,
+    )
+    check(
+        "report template fence does not name expected add-backs",
+        bool(fence_text) and "expected add-backs" not in fence_text,
+    )
+    check(
+        "README does not name expected add-backs",
+        "expected add-backs" not in readme.lower(),
     )
 
     english_files = [

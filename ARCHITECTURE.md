@@ -46,7 +46,7 @@ trigger (musk algorithm, /musk-algorithm, description phrases)
     -> load SKILL.md (agent)
     -> cite from references/sources.md; do not invent quotes
     -> step 1 Question every requirement   (named person, not department)
-    -> step 2 Delete any part or process   (10% add-back bar)
+    -> step 2 Delete any part or process   (10% add-back bar; later/forced, not a same-pass restore quota)
     -> step 3 Simplify and optimize        (only after 1–2)
     -> step 4 Accelerate cycle time        (only after 1–3)
     -> step 5 Automate                     (last)

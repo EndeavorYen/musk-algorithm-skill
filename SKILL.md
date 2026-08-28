@@ -90,13 +90,17 @@ it. A missing name is not an owner.
 
 Delete what step 1 dropped, and delete any remaining part or process you
 can. If you would not add back at least 10%, you did not delete enough.
-Warn that some deletions will return. Over-conservative never-put-back
-is failure.
+That 10% add-back bar is later and forced by the evaluated subject's
+live path, not a same-pass quota of restore names. If you are certain
+none of the deletions would ever be forced back, you did not delete
+enough — include borderline items you are not certain about. Warn that
+some deletions will return. Over-conservative never-put-back is failure.
+This skill does not persist a catalog, run add-back tests, or restore.
 
 Artifact:
 
 - Delete list (part or process, why)
-- Expected add-backs (at least 10% of the delete list, or delete more)
+- Borderline cuts (deleted despite not being certain), if any
 - Warning that some deletions will be put back
 
 Deleting a process from the live path is not the same as deleting the
@@ -164,6 +168,7 @@ Reject these and continue:
 - "Merge means the delete landed" — go-live is the operator surface, not the merge.
 - "Musk report done, rewrite now" — report-not-rewrite. Implement only if asked, as a separate hunt-fix.
 - "Context is long / the agent will forget, so write a file" — no next-round reader; a file does not shorten this turn; they name a path or paste later.
+- "Name expected add-backs now as 10% of the delete list" — same-pass quota; forbidden.
 
 ## Report
 
@@ -180,7 +185,8 @@ named a path.
 (table: named owners; keep / change / drop)
 
 ## 2. Deletions
-(delete list + expected add-backs + warning)
+(delete list + borderline cuts if any + warning)
+(10% is later / forced by the subject's live path)
 (live-path vs leftover tree; surviving surface check)
 
 ## 3. Simplify and optimize
