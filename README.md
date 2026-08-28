@@ -130,7 +130,7 @@ You can run this whenever you want. Name the subject and invoke it.
 
 **Explicit (always):** `/musk-algorithm`, or `musk algorithm` / `run the musk algorithm on …`. Explicit invocation always runs, even if the subject is small or already shipped.
 
-**Automatic (only when it fits):** questioning requirements, deleting before optimizing, or whether something should exist before it is sped up or automated. It does **not** load on every message.
+**Automatic (only when it fits):** about to optimize, speed up, or automate something that may not need to exist. It does **not** load on ordinary implementation, a bugfix, a build, or every message.
 
 Phrases: `musk algorithm`, `musk-algorithm`, `five-step algorithm`, `first principles algorithm`, `question every requirement`, `make requirements less dumb`, `delete before optimize`, `/musk-algorithm`.
 
@@ -140,6 +140,8 @@ Typical asks:
 - Question every requirement on this spec; named owners only.
 - Run `/musk-algorithm` on the proposed pipeline before we automate it.
 - After that report: `/musk-backlog` (explicit; does not auto-run).
+
+Do not expect a load from "implement the spec", "fix this bug", or "add a button" unless they also named this skill.
 
 ## Sources
 

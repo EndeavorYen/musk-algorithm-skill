@@ -1,13 +1,17 @@
 ---
 name: musk-algorithm
 description: >
-  Evaluate a requirement, design, process, or system with Musk's
-  first principles algorithm. Use when the user says
-  musk algorithm, musk-algorithm, five-step algorithm, first principles algorithm,
-  make requirements less dumb, delete before optimize, question every requirement,
-  or runs /musk-algorithm. Explicit invocation always runs, on whatever subject
-  they named. Use when a surviving operator surface still names a process
-  that was just deleted.
+  Use when the user says musk algorithm, musk-algorithm,
+  five-step algorithm, first principles algorithm,
+  make requirements less dumb, delete before optimize,
+  question every requirement, or runs /musk-algorithm.
+  Explicit invocation always runs, on whatever subject they named.
+  Auto-load only when they are about to optimize, speed up, or
+  automate something that may not need to exist, or the surviving
+  operator surface still names a process that was just deleted.
+  Do not use for ordinary implementation, a bugfix, a build,
+  listing challenges, or a hunt-fix loop. Do not use only because
+  the user named a requirement, design, process, or system.
 ---
 
 Speak in the user's language.
@@ -32,12 +36,15 @@ run it on whatever they pointed at: a requirement, design, process, system,
 code, or docs. Explicit invocation always wins. Do not refuse because the
 subject is small, already shipped, or not a greenfield design.
 
+If they did not name this skill and asked to implement, fix, build, or
+ship, stop. Do not run.
+
 Auto-load when they are about to optimize, speed up, or automate something
 that may not need to exist, or when they ask to question requirements or
 delete parts of a design.
 
-Do not auto-load for ordinary implementation, a bugfix, or an evidence-backed
-hunt. Complementary; never merge.
+Do not auto-load for ordinary implementation, a bugfix, a build, or an
+evidence-backed hunt. Complementary; never merge.
 
 `just-ten-more` lists up to 10 evidence-backed challenges. It does not fix
 and does not write a review log. `just-ten-more-loop` fixes or records
@@ -169,6 +176,7 @@ Reject these and continue:
 - "Musk report done, rewrite now" — report-not-rewrite. Implement only if asked, as a separate hunt-fix.
 - "Context is long / the agent will forget, so write a file" — no next-round reader; a file does not shorten this turn; they name a path or paste later.
 - "Name expected add-backs now as 10% of the delete list" — same-pass quota; forbidden.
+- "They sent a command, so run musk-algorithm" — not named; stop if it is implement / fix / build / ship.
 
 ## Report
 

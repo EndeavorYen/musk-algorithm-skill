@@ -124,6 +124,14 @@ def main() -> int:
     check("description contains question every requirement", "question every requirement" in fm)
     check("description contains /musk-algorithm", "/musk-algorithm" in fm)
     check("description says explicit invocation always", "explicit invocation always" in fm.lower())
+    check(
+        "description says do not use for ordinary implementation",
+        "do not use" in fm.lower() and "ordinary implementation" in fm.lower(),
+    )
+    check(
+        "description does not open as a generic evaluate-any-system skill",
+        "Evaluate a requirement, design, process, or system" not in fm,
+    )
 
     named_person = (
         "named person" in body_l
@@ -142,6 +150,12 @@ def main() -> int:
         "not a code rewrite" in body_l or "not a rewrite" in body_l
     )
 
+    check(
+        "SKILL.md stops implement/fix/build/ship unless named",
+        "did not name this skill" in body_l
+        and "asked to implement, fix, build, or" in body_l
+        and "stop. do not run." in body_l,
+    )
     check("body has Question every requirement", "Question every requirement" in body)
     check("body has named-person rule", named_person)
     check("body has Delete any part or process", "Delete any part or process" in body)
